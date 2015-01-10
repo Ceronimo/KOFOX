@@ -52,18 +52,6 @@ uint8 CUser::GetNewRace()
 
 	if (GetNation() == KARUS)
 	{
-#if __VERSION >= 2000
-		if (m_bRace == KARUS_BIG)
-			nNewRace = BABARIAN;
-		else if (m_bRace == KARUS_MIDDLE)
-			nNewRace = ELMORAD_MAN;
-		else if (m_bRace == KARUS_SMALL)
-			nNewRace = ELMORAD_MAN;
-		else if (m_bRace == KARUS_WOMAN)
-			nNewRace = ELMORAD_WOMAN;
-		else if (m_bRace == KARUS_KURIAN)
-			nNewRace = ELMORAD_PORTU;
-#else
 		if (m_bRace == KARUS_BIG)
 			nNewRace = BABARIAN;
 		else if (m_bRace == KARUS_MIDDLE)
@@ -76,37 +64,6 @@ uint8 CUser::GetNewRace()
 	}
 	else
 	{
-#if __VERSION >= 2000
-		if (m_bRace == BABARIAN)
-			nNewRace = KARUS_BIG;
-		// El Morad Male and El Morad Warriors
-		else if (m_bRace == ELMORAD_MAN && isWarrior())
-			nNewRace = KARUS_BIG;
-		// El Morad Female and El Morad Warriors
-		else if (m_bRace == ELMORAD_WOMAN && isWarrior())
-			nNewRace = KARUS_BIG;
-		// El Morad Male and El Morad Rogues
-		else if (m_bRace == ELMORAD_MAN && isRogue())
-			nNewRace = KARUS_MIDDLE;
-		// El Morad Female and El Morad Rogues
-		else if (m_bRace == ELMORAD_WOMAN && isRogue())
-			nNewRace = KARUS_MIDDLE;
-		// El Morad Male and El Morad Magicians
-		else if (m_bRace == ELMORAD_MAN && isMage())
-			nNewRace = KARUS_SMALL;
-		// El Morad Female and El Morad Magicians
-		else if (m_bRace == ELMORAD_WOMAN && isMage())
-			nNewRace = KARUS_WOMAN;
-		// El Morad Male and El Morad Priests
-		else if (m_bRace == ELMORAD_MAN && isPriest())
-			nNewRace = KARUS_MIDDLE;
-		// El Morad Female and El Morad Priests
-		else if (m_bRace == ELMORAD_WOMAN && isPriest())
-			nNewRace = KARUS_WOMAN;
-		// El Morad Portu
-		else if (m_bRace == ELMORAD_PORTU && isPortu())
-			nNewRace = KARUS_KURIAN;
-#else
 		if (m_bRace == BABARIAN)
 			nNewRace = KARUS_BIG;
 		// El Morad Male and El Morad Warriors
@@ -217,42 +174,6 @@ uint8 CUser::JobChange(uint8 NewJob /*= 0*/)
 	{
 		if (GetNation() == KARUS)
 		{
-#if __VERSION >= 2000
-			// Beginner Karus Rogue, Magician, Priest
-			if (isBeginnerRogue() || isBeginnerMage() || isBeginnerPriest() || isBeginnerKurian())
-			{
-				bNewClass = KARUWARRIOR;
-				bNewRace = KARUS_BIG;
-			}
-			// Skilled Karus Rogue, Magician, Priest
-			else if (isNoviceRogue() || isNoviceMage() || isNovicePriest() || isNoviceKurian())
-			{
-				bNewClass = BERSERKER;
-				bNewRace = KARUS_BIG;
-			}
-			// Mastered Karus Rogue, Magician, Priest
-			else if (isNoviceRogue() || isNoviceMage() || isNovicePriest() || isNoviceKurian())
-			{
-				bNewClass = GUARDIAN;
-				bNewRace = KARUS_BIG;
-			}
-			// Beginner Karus Kurian
-			else if (isBeginnerRogue() || isBeginnerMage() || isBeginnerPriest() || isBeginnerKurian())
-			{
-				bNewClass = KARUKURIAN;
-				bNewRace = KARUS_KURIAN;
-			}
-			else if (isMasteredRogue() || isMasteredMage() || isMasteredPriest() || isMasteredKurian())
-			{
-				bNewClass = KURIANN;
-				bNewRace = KARUS_KURIAN;
-			}
-			else if (isMasteredRogue() || isMasteredMage() || isMasteredPriest() || isMasteredWarrior())
-			{
-				bNewClass = KURIANM;
-				bNewRace = KARUS_KURIAN;
-			}
-#else
 			// Beginner Karus Rogue, Magician, Priest
 			if (isBeginnerRogue() || isBeginnerMage() || isBeginnerPriest())
 			{
@@ -271,45 +192,10 @@ uint8 CUser::JobChange(uint8 NewJob /*= 0*/)
 				bNewClass = GUARDIAN;
 				bNewRace = KARUS_BIG;
 			}
-#endif
+
 		}
 		else
 		{
-#if __VERSION >= 2000
-			// Beginner El Morad Rogue, Magician, Priest
-			if (isBeginnerRogue() || isBeginnerMage() || isBeginnerPriest() || isBeginnerPortu())
-			{
-				bNewClass = ELMORWARRRIOR;
-				bNewRace = GetRace();
-			}
-			else if (isBeginnerRogue() || isBeginnerMage() || isBeginnerPriest() || isBeginnerWarrior())
-			{
-				bNewClass = ELMOPORTU;
-				bNewRace = GetRace();
-			}
-			// Skilled El Morad Rogue, Magician, Priest
-			else if (isNoviceRogue() || isNoviceMage() || isNovicePriest() || isNovicePortu())
-			{
-				bNewClass = BLADE;
-				bNewRace = GetRace();
-			}
-			else if (isNoviceRogue() || isNoviceMage() || isNovicePriest() || isNoviceWarrior())
-			{
-				bNewClass = PORTUN;
-				bNewRace = GetRace();
-			}
-			// Mastered El Morad Rogue, Magician, Priest
-			else if (isMasteredRogue() || isMasteredMage() || isMasteredPriest() || isMasteredPortu())
-			{
-				bNewClass = PROTECTOR;
-				bNewRace = GetRace();
-			}
-			else if (isMasteredRogue() || isMasteredMage() || isMasteredPriest() || isMasteredWarrior())
-			{
-				bNewClass = PORTUM;
-				bNewRace = GetRace();
-			}
-#else
 			// Beginner El Morad Rogue, Magician, Priest
 			if (isBeginnerRogue() || isBeginnerMage() || isBeginnerPriest())
 			{
@@ -341,26 +227,6 @@ uint8 CUser::JobChange(uint8 NewJob /*= 0*/)
 	{
 		if (GetNation() == KARUS)
 		{
-#if __VERSION >= 2000
-			// Beginner Karus Warrior, Magician, Priest
-			if (isBeginnerWarrior() || isBeginnerMage() || isBeginnerPriest() || isBeginnerKurian())
-			{
-				bNewClass = KARUROGUE;
-				bNewRace = KARUS_MIDDLE;
-			}
-			// Skilled Karus Warrior, Magician, Priest
-			else if (isNoviceWarrior() || isNoviceMage() || isNovicePriest() || isNoviceKurian())
-			{
-				bNewClass = HUNTER;
-				bNewRace = KARUS_MIDDLE;
-			}
-			// Mastered Karus Warrior, Magician, Priest
-			else if (isMasteredWarrior() || isMasteredMage() || isMasteredPriest() || isMasteredKurian())
-			{
-				bNewClass = PENETRATOR;
-				bNewRace = KARUS_MIDDLE;
-			}
-#else
 			// Beginner Karus Warrior, Magician, Priest
 			if (isBeginnerWarrior() || isBeginnerMage() || isBeginnerPriest())
 			{
@@ -379,42 +245,9 @@ uint8 CUser::JobChange(uint8 NewJob /*= 0*/)
 				bNewClass = PENETRATOR;
 				bNewRace = KARUS_MIDDLE;
 			}
-#endif
 		}
 		else
 		{
-#if __VERSION >= 2000
-			// Beginner El Morad Warrior, Magician, Priest
-			if (isBeginnerWarrior() || isBeginnerMage() || isBeginnerPriest() || isBeginnerPortu())
-			{
-				bNewClass = ELMOROGUE;
-
-				if (GetRace() == BABARIAN)
-					bNewRace = ELMORAD_MAN;
-				else
-					bNewRace = GetRace();
-			}
-			// Skilled El Morad Warrior, Magician, Priest
-			else if (isNoviceWarrior() || isNoviceMage() || isNovicePriest() || isNovicePortu())
-			{
-				bNewClass = RANGER;
-
-				if (GetRace() == BABARIAN)
-					bNewRace = ELMORAD_MAN;
-				else
-					bNewRace = GetRace();
-			}
-			// Mastered El Morad Warrior, Magician, Priest
-			else if (isMasteredWarrior() || isMasteredMage() || isMasteredPriest() || isMasteredPortu())
-			{
-				bNewClass = ASSASSIN;
-
-				if (GetRace() == BABARIAN)
-					bNewRace = ELMORAD_MAN;
-				else
-					bNewRace = GetRace();
-			}
-#else
 			// Beginner El Morad Warrior, Magician, Priest
 			if (isBeginnerWarrior() || isBeginnerMage() || isBeginnerPriest())
 			{
@@ -445,7 +278,6 @@ uint8 CUser::JobChange(uint8 NewJob /*= 0*/)
 				else
 					bNewRace = GetRace();
 			}
-#endif
 		}
 
 		// Character already Rogue.
@@ -458,38 +290,6 @@ uint8 CUser::JobChange(uint8 NewJob /*= 0*/)
 	{
 		if (GetNation() == KARUS)
 		{
-#if __VERSION >= 2000
-			// Beginner Karus Warrior, Rogue, Priest
-			if (isBeginnerWarrior() || isBeginnerRogue() || isBeginnerPriest() || isBeginnerKurian())
-			{
-				bNewClass = KARUWIZARD;
-
-				if (GetRace() == KARUS_BIG || GetRace() == KARUS_MIDDLE)
-					bNewRace = KARUS_SMALL;
-				else
-					bNewRace = GetRace();
-			}
-			// Skilled Karus Warrior, Rogue, Priest
-			else if (isNoviceWarrior() || isNoviceRogue() || isNovicePriest() || isNoviceKurian())
-			{
-				bNewClass = SORSERER;
-
-				if (GetRace() == KARUS_BIG || GetRace() == KARUS_MIDDLE)
-					bNewRace = KARUS_SMALL;
-				else
-					bNewRace = GetRace();
-			}
-			// Mastered Karus Warrior, Rogue, Priest
-			else if (isMasteredWarrior() || isMasteredRogue() || isMasteredPriest() || isMasteredKurian())
-			{
-				bNewClass = NECROMANCER;
-
-				if (GetRace() == KARUS_BIG || GetRace() == KARUS_MIDDLE)
-					bNewRace = KARUS_SMALL;
-				else
-					bNewRace = GetRace();
-			}
-#else
 			// Beginner Karus Warrior, Rogue, Priest
 			if (isBeginnerWarrior() || isBeginnerRogue() || isBeginnerPriest())
 			{
@@ -521,42 +321,9 @@ uint8 CUser::JobChange(uint8 NewJob /*= 0*/)
 					bNewRace = GetRace();
 			}
 
-#endif
 		}
 		else
 		{
-#if __VERSION >= 2000
-						// Beginner El Morad Warrior, Rogue, Priest
-			if (isBeginnerRogue() || isBeginnerRogue() || isBeginnerPriest() || isBeginnerPortu())
-			{
-				bNewClass = ELMOWIZARD;
-
-				if (GetRace() == BABARIAN)
-					bNewRace = ELMORAD_MAN;
-				else
-					bNewRace = GetRace();
-			}
-			// Skilled El Morad Warrior, Rogue, Priest
-			else if (isNoviceWarrior() || isNoviceRogue() || isNovicePriest() || isNovicePortu())
-			{
-				bNewClass = MAGE;
-
-				if (GetRace() == BABARIAN)
-					bNewRace = ELMORAD_MAN;
-				else
-					bNewRace = GetRace();
-			}
-			// Mastered El Morad Warrior, Rogue, Priest
-			else if (isMasteredWarrior() || isMasteredRogue() || isMasteredPriest() || isMasteredPortu())
-			{
-				bNewClass = ENCHANTER;
-
-				if (GetRace() == BABARIAN)
-					bNewRace = ELMORAD_MAN;
-				else
-					bNewRace = GetRace();
-			}
-#else
 			// Beginner El Morad Warrior, Rogue, Priest
 			if (isBeginnerRogue() || isBeginnerRogue() || isBeginnerPriest())
 			{
@@ -587,7 +354,6 @@ uint8 CUser::JobChange(uint8 NewJob /*= 0*/)
 				else
 					bNewRace = GetRace();
 			}
-#endif
 		}
 
 		// Character already Magician.
@@ -600,38 +366,6 @@ uint8 CUser::JobChange(uint8 NewJob /*= 0*/)
 	{
 		if (GetNation() == KARUS)
 		{
-#if __VERSION >= 2000
-			// Beginner Karus Warrior, Rogue, Magician
-			if (isBeginnerWarrior() || isBeginnerRogue() || isBeginnerMage() || isBeginnerKurian())
-			{
-				bNewClass = KARUPRIEST;
-
-				if (GetRace() == KARUS_BIG || GetRace() == KARUS_SMALL)
-					bNewRace = KARUS_MIDDLE;
-				else
-					bNewRace = GetRace();
-			}
-			// Skilled Karus Warrior, Rogue, Magician
-			else if (isNoviceWarrior() || isNoviceRogue() || isNoviceMage() || isNoviceKurian())
-			{
-				bNewClass = SHAMAN;
-
-				if (GetRace() == KARUS_BIG || GetRace() == KARUS_SMALL)
-					bNewRace = KARUS_MIDDLE;
-				else
-					bNewRace = GetRace();
-			}
-			// Mastered Karus Warrior, Rogue, Magician
-			else if (isMasteredRogue() || isMasteredRogue() || isMasteredMage() || isMasteredKurian())
-			{
-				bNewClass = DARKPRIEST;
-
-				if (GetRace() == KARUS_BIG || GetRace() == KARUS_SMALL)
-					bNewRace = KARUS_MIDDLE;
-				else
-					bNewRace = GetRace();
-			}
-#else
 			// Beginner Karus Warrior, Rogue, Magician
 			if (isBeginnerWarrior() || isBeginnerRogue() || isBeginnerMage())
 			{
@@ -662,42 +396,9 @@ uint8 CUser::JobChange(uint8 NewJob /*= 0*/)
 				else
 					bNewRace = GetRace();
 			}
-#endif
 		}
 		else
 		{
-#if __VERSION >= 2000
-			// Beginner El Morad Warrior, Rogue, Magician
-			if (isBeginnerRogue() || isBeginnerRogue() || isBeginnerMage() || isBeginnerPortu())
-			{
-				bNewClass = ELMOPRIEST;
-
-				if (GetRace() == BABARIAN)
-					bNewRace = ELMORAD_MAN;
-				else
-					bNewRace = GetRace();
-			}
-			// Skilled El Morad Warrior, Rogue, Magician
-			else if (isNoviceRogue() || isNoviceRogue() || isNoviceMage() || isNovicePortu())
-			{
-				bNewClass = CLERIC;
-
-				if (GetRace() == BABARIAN)
-					bNewRace = ELMORAD_MAN;
-				else
-					bNewRace = GetRace();
-			}
-			// Mastered El Morad Warrior, Rogue, Magician
-			else if (isMasteredRogue() || isMasteredRogue() || isMasteredMage() || isMasteredPortu())
-			{
-				bNewClass = DRUID;
-
-				if (GetRace() == BABARIAN)
-					bNewRace = ELMORAD_MAN;
-				else
-					bNewRace = GetRace();
-			}
-#else
 			// Beginner El Morad Warrior, Rogue, Magician
 			if (isBeginnerRogue() || isBeginnerRogue() || isBeginnerMage())
 			{
@@ -728,7 +429,6 @@ uint8 CUser::JobChange(uint8 NewJob /*= 0*/)
 				else
 					bNewRace = GetRace();
 			}
-#endif
 		}
 
 		// Character already Priest.
